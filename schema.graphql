@@ -1,0 +1,26 @@
+type ContractAdded @entity(immutable: true) {
+  id: Bytes!
+  _address: Bytes! # address
+  _type: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ContractRemoved @entity(immutable: true) {
+  id: Bytes!
+  _address: Bytes! # address
+  _type: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
