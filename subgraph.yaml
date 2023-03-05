@@ -6,8 +6,9 @@ dataSources:
     name: Registry
     network: goerli
     source:
-      address: "0x29AF00249f422D15193d22e7B2114A1b12871A9b"
+      address: "0x71aC562ee21D5D1F953646Df06e62FC17752743D"
       abi: Registry
+      startBlock: 8599550
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -15,6 +16,7 @@ dataSources:
       entities:
         - ContractAdded
         - ContractRemoved
+        - Contract
         - OwnershipTransferred
       abis:
         - name: Registry
@@ -22,8 +24,106 @@ dataSources:
       eventHandlers:
         - event: ContractAdded(address,uint8)
           handler: handleContractAdded
-        - event: ContractRemoved(address,uint8)
-          handler: handleContractRemoved
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
+      ##- event: ContractRemoved(address,uint8)
+      ##  handler: handleContractRemoved
+      ##- event: OwnershipTransferred(indexed address,indexed address)
+      ##  handler: handleOwnershipTransferred
       file: ./src/registry.ts
+  - kind: ethereum
+    name: Gear
+    network: goerli
+    source:
+      address: "0xd6aeDD59E179F53d2A270f7438f1e2edaCDe12Cd"
+      abi: Gear
+      startBlock: 8599550
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ContractAdded
+        - ContractRemoved
+        - Contract
+        - OwnershipTransferred
+      abis:
+        - name: Gear
+          file: ./abis/Gear.json
+      eventHandlers:
+        - event: GearCreated(uint256,(uint8,uint8)[],uint8)
+          handler: handleGearCreated
+        - event: GearEquipped(uint256,uint256)
+          handler: handleGearEquipped
+        - event: GearMinted(uint256,uint256)
+          handler: handleGearMinted
+      # - event: LootBoxCreated(uint256,(uint256,uint256,uint256)[],uint256)
+      #   handler: handleLootBoxCreated
+      file: ./src/gear.ts
+##- kind: ethereum
+##  name: Contract
+##  network: goerli
+##  source:
+##    address: "0x1fb478125a3C88Ed7F3382eE7Ece1a8c16ea7E56"
+##    abi: Contract
+##    startBlock: 8599550
+##  mapping:
+##    kind: ethereum/events
+##    apiVersion: 0.0.7
+##    language: wasm/assemblyscript
+##    entities:
+##      - DungeonLost
+##      - DungeonPlayed
+##      - DungeonWon
+##    abis:
+##      - name: Contract
+##        file: ./abis/Contract.json
+##    eventHandlers:
+##      - event: DungeonLost(uint256)
+##        handler: handleDungeonLost
+##      - event: DungeonPlayed(uint256)
+##        handler: handleDungeonPlayed
+##      - event: DungeonWon(uint256)
+##        handler: handleDungeonWon
+##    file: ./src/dungeon.ts
+templates:
+  - name: PlayerSheet
+    kind: ethereum/contract
+    network: goerli
+    source:
+      abi: PlayerSheet
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/playerSheet.ts
+      entities:
+        - Approval
+        - ApprovalForAll
+        - Transfer
+        - GearEquipped
+        - PlayerFinalized
+        - PlayerLeveledUp
+        - PlayerMinted
+        - PlayerSheet
+        - User
+        - Player
+        - PlayerClass
+      abis:
+        - name: PlayerSheet
+          file: ./abis/PlayerSheet.json
+      eventHandlers:
+      ##- event: Approval(indexed address,indexed address,indexed uint256)
+      ##  handler: handleApproval
+      ##- event: ApprovalForAll(indexed address,indexed address,bool)
+      ##  handler: handleApprovalForAll
+      - event: GearEquipped(uint256,address,uint256)
+        handler: handleGearEquipped
+      ##- event: PlayerFinalized(uint256,(uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint256))
+      ##  handler: handlePlayerFinalized
+      ##- event: PlayerLeveledUp(uint256,(uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint256))
+      ##  handler: handlePlayerLeveledUp
+      - event: PlayerMinted(uint256,(uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint8,uint256),address,string)
+        handler: handlePlayerMinted
+      #- event: Transfer(indexed address,indexed address,indexed uint256)
+      #   handler: handleTransfer
+      #  - event: ClassCreated(string,address)
+      #  handler: handleClassCreated

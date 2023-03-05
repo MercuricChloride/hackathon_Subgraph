@@ -1,0 +1,218 @@
+ #type ContractAdded @entity(immutable: true) {
+ #  id: Bytes!
+ #  _address: Bytes! # address
+ #  _type: Int! # uint8
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type ContractRemoved @entity(immutable: true) {
+ #  id: Bytes!
+ #  _address: Bytes! # address
+ #  _type: Int! # uint8
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type OwnershipTransferred @entity(immutable: true) {
+ #  id: Bytes!
+ #  previousOwner: Bytes! # address
+ #  newOwner: Bytes! # address
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+ #type Approval @entity(immutable: true) {
+ #  id: Bytes!
+ #  owner: Bytes! # address
+ #  approved: Bytes! # address
+ #  tokenId: BigInt! # uint256
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type ApprovalForAll @entity(immutable: true) {
+ #  id: Bytes!
+ #  owner: Bytes! # address
+ #  operator: Bytes! # address
+ #  approved: Boolean! # bool
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type GearEquipped @entity(immutable: true) {
+ #  id: Bytes!
+ #  tokenId: BigInt! # uint256
+ #  gearContract: Bytes! # address
+ #  gearTokenId: BigInt! # uint256
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type PlayerFinalized @entity(immutable: true) {
+ #  id: Bytes!
+ #  tokenId: BigInt! # uint256
+ #  stats_constitution: Int! # uint8
+ #  stats_dexterity: Int! # uint8
+ #  stats_strength: Int! # uint8
+ #  stats_wisdom: Int! # uint8
+ #  stats_inteligence: Int! # uint8
+ #  stats_charisma: Int! # uint8
+ #  stats_luck: Int! # uint8
+ #  stats_level: Int! # uint8
+ #  stats_pointsToSpend: Int! # uint8
+ #  stats_xp: BigInt! # uint256
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type PlayerLeveledUp @entity(immutable: true) {
+ #  id: Bytes!
+ #  tokenId: BigInt! # uint256
+ #  stats_constitution: Int! # uint8
+ #  stats_dexterity: Int! # uint8
+ #  stats_strength: Int! # uint8
+ #  stats_wisdom: Int! # uint8
+ #  stats_inteligence: Int! # uint8
+ #  stats_charisma: Int! # uint8
+ #  stats_luck: Int! # uint8
+ #  stats_level: Int! # uint8
+ #  stats_pointsToSpend: Int! # uint8
+ #  stats_xp: BigInt! # uint256
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type PlayerMinted @entity(immutable: true) {
+ #  id: Bytes!
+ #  playerClass: PlayerClass!
+ #  tokenId: BigInt! # uint256
+ #  stats_constitution: Int! # uint8
+ #  stats_dexterity: Int! # uint8
+ #  stats_strength: Int! # uint8
+ #  stats_wisdom: Int! # uint8
+ #  stats_inteligence: Int! # uint8
+ #  stats_charisma: Int! # uint8
+ #  stats_luck: Int! # uint8
+ #  stats_level: Int! # uint8
+ #  stats_pointsToSpend: Int! # uint8
+ #  stats_xp: BigInt! # uint256
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+ #type Transfer @entity(immutable: true) {
+ #  id: Bytes!
+ #  from: Bytes! # address
+ #  to: Bytes! # address
+ #  tokenId: BigInt! # uint256
+ #  blockNumber: BigInt!
+ #  blockTimestamp: BigInt!
+ #  transactionHash: Bytes!
+ #}
+
+### NEW SUBGRAPH
+
+ #enum ContractType {
+ #  Dungeon
+ #  Class
+ #  Gear
+ #}
+
+ #enum Stat {
+ #  Constitution,
+ #  Dexterity,
+ #  Strength,
+ #  Wisdom,
+ #  Inteligence,
+ #  Charisma,
+ #  Luck
+ #}
+
+type Contract @entity {
+  id: ID! #id will be the address of the contract added
+  address: Bytes!
+  type: Int!
+  removed: Boolean!
+}
+
+type PlayerClass @entity {
+  id: ID!
+  name: String
+}
+
+type Player @entity{
+  id: ID! #txHash
+  tokenId: BigInt! #tokenID
+  owner: String! #address
+  playerClass: PlayerClass!
+
+  pointsToSpend: Int! #randomized on mint
+
+  constitution: Int!
+  dexterity: Int!
+  strength: Int!
+  wisdom: Int!
+  intelligence: Int!
+  charisma: Int!
+  luck: Int!
+
+  head: Gear
+  body: Gear
+  legs: Gear
+  feet: Gear
+}
+
+type Modifier @entity {
+  id: ID!
+  stat: Int!
+  mod: Int!
+}
+
+type GearType @entity {
+  id: ID! #gearId
+  modifiers: [Modifier!]
+  slot: Int!
+}
+
+type Gear @entity{
+  id: ID! # tokenID
+  gearType: GearType!
+  owner: String!
+}
+
+ type LootBox @entity {
+   id: ID! # Id of the lootbox
+   createdBy: Bytes!
+   rangeMax: BigInt!
+   items: [LootBoxItem!]
+ }
+
+ type LootBoxItem @entity {
+   id: ID! # tx hash or something
+   gearItem: Gear! # gear item referenced in the gearId
+   rangeStart: BigInt!
+   rangeEnd: BigInt!
+ }
+
+
+ type DungeonFinalized @entity(immutable: true) {
+   id: ID!
+   dungeonId: BigInt! # uint256
+   won: Boolean!
+   owner: Bytes! # msg.sender
+ }
+
+ type DungeonPlayed @entity(immutable: true) {
+   id: ID!
+   dungeonId: BigInt! # uint256
+   owner: Bytes! # msg.sender
+ }

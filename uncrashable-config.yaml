@@ -1,0 +1,69 @@
+networkConfig:
+  entityIdPrefixes:
+    - networks:
+        - goerli
+      prefix: "goerli"
+entitySettings:
+  Contract:
+    useDefault:
+      removed: false
+    setters:
+      - name: updateContract
+        fields:
+          - address
+          - type
+          - removed
+      - name: setType
+        fields:
+          - type
+      - name: setAddress
+        fields:
+          - address
+    entityId:
+      - name: contractId
+        type: String
+    PlayerClass:
+      setters:
+        - name: updateName
+          fields:
+            - name
+      entityId:
+        - name: contractId
+          type: String
+    Player:
+      setters:
+        - name: updateHead
+          fields:
+            - head
+        - name: updateBody
+          fields:
+            - body
+        - name: updateLegs
+          fields:
+            - legs
+        - name: updateFeet
+          fields:
+            - feet
+      entityId:
+        - name: PlayerId
+          type: String
+    Modifier:
+      entityId:
+        - name: ModifierId
+          type: String
+    GearType:
+      entityId:
+        - name: GearTypeId
+          type: String
+    Gear:
+      entityId:
+        - name: GearId
+          type: String
+    DungeonFinalied:
+      entityId:
+        - name: DungeonWonId
+          type: BigInt
+    DungeonPlayed:
+      entityId:
+        - name: DungeonPlayedId
+          type: BigInt

@@ -1,0 +1,184 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_vrf",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gold",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "dungeonId",
+        "type": "uint256"
+      }
+    ],
+    "name": "DungeonLost",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "dungeonId",
+        "type": "uint256"
+      }
+    ],
+    "name": "DungeonPlayed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "dungeonId",
+        "type": "uint256"
+      }
+    ],
+    "name": "DungeonWon",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "dungeonCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "dungeonOwner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "dungeonStatus",
+    "outputs": [
+      {
+        "internalType": "enum Dungeon.DungeonStatus",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "dungeonId",
+        "type": "uint256"
+      }
+    ],
+    "name": "finalizeDungeon",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gold",
+    "outputs": [
+      {
+        "internalType": "contract Gold",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "contract PlayerSheet",
+                "name": "playerSheet",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IDungeon.Player[]",
+            "name": "players",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum IDungeon.PlayMode",
+            "name": "mode",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct IDungeon.Party",
+        "name": "party",
+        "type": "tuple"
+      }
+    ],
+    "name": "playDungeon",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vrf",
+    "outputs": [
+      {
+        "internalType": "contract VRF",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

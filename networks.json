@@ -2,6 +2,9 @@
   "goerli": {
     "Registry": {
       "address": "0x29AF00249f422D15193d22e7B2114A1b12871A9b"
+    },
+    "Contract": {
+      "address": "0x1fb478125a3C88Ed7F3382eE7Ece1a8c16ea7E56"
     }
   }
 }
